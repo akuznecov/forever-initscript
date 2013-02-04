@@ -1,0 +1,86 @@
+#!/bin/bash
+#
+# httpd        Startup script for the Forever NodeJS
+#
+# chkconfig: - 85 15
+# description: Event-driven I/O server-side JavaScript environment based on V8. \
+#              A simple CLI tool for ensuring that a given script runs continuously.
+# processname: forever
+# config: /etc/forever.d/*.conf
+#
+### BEGIN INIT INFO
+# Provides: forever
+# Required-Start: $local_fs $remote_fs $network $named
+# Required-Stop: $local_fs $remote_fs $network
+# Should-Start: distcache
+# Short-Description: start and stop Forever NodeJS
+# Description: Event-driven I/O server-side JavaScript environment based on V8.
+#  A simple CLI tool for ensuring that a given script runs continuously.
+### END INIT INFO
+
+set -e
+
+OPTION=$1
+
+ME=`whoami`
+as_user() {
+  if [ $ME == $USERNAME ] ; then
+    bash -lc "$1"
+  else
+    su -l $USERNAME -c "$1"
+  fi
+}
+
+cmd () {
+
+  case $1 in
+    start)
+      echo "Starting"
+      as_user "$CMD"
+      ;;  
+    stop)
+      echo "Stopping"
+      as_user "$CMD"
+      ;;  
+    restart|reload)
+      echo "Restarting"
+      as_user "$CMD"
+      ;;  
+    *)  
+      echo >&2 "Usage: $0 <start|stop|restart"
+      exit 1
+      ;;  
+    esac
+}
+
+setup () {
+  CMD="cd $NODEJS_ROOT; forever $OPTION $NODEJS_SCRIPT"
+
+}
+
+start_stop () {
+  
+  # either run the start/stop/restart/etc command for every config under /etc/forever.d
+  # or just do it for a specific one
+
+  # $1 contains the start/stop/etc command
+  # $2 if it exists, should be the specific config we want to act on
+  if [ $2 ]; then
+    . $2
+    setup
+    cmd $1
+  else
+    for CONFIG in `ls /etc/forever.d/*.conf`; do
+      # import the variables
+      . $CONFIG
+      setup
+
+      # run the start/stop/etc command
+      cmd $1
+    done
+   fi
+}
+
+ARGS="$1 $2"
+start_stop $ARGS
+
