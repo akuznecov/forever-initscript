@@ -8,7 +8,7 @@ On BSD system you will probably need to put script to /usr/local/etc/rc.d (in th
 
 ## Configuration
 
-Edit /etc/forever.d/example.conf with you settings.
+Edit /etc/forever.d/example.conf with your settings.
 
 You may rename it corresponding to your application name for better identification with multiple NodeJS apps
 
