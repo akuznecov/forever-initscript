@@ -54,7 +54,7 @@ cmd () {
 }
 
 setup () {
-  CMD="cd $NODEJS_ROOT; forever $OPTION $NODEJS_SCRIPT"
+  CMD="cd $NODE_ROOT; NODE_ENV=$NODE_ENV forever $OPTION $NODE_SCRIPT"
 
 }
 
