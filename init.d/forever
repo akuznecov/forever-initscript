@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# httpd        Startup script for the Forever NodeJS
+# forever        Startup script for the Forever NodeJS
 #
 # chkconfig: - 85 15
 # description: Event-driven I/O server-side JavaScript environment based on V8. \
