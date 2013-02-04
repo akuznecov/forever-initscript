@@ -4,7 +4,7 @@
 
 Just check out this repository and put directories to your /etc folder.
 
-On BSD system you will probably need to put it to /usr/local/etc (in this case, changinh path for configuration files is also required)
+On BSD system you will probably need to put script to /usr/local/etc/rc.d (in this case, changing path for configuration files is also required)
 
 ## Configuration
 
